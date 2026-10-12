@@ -1,0 +1,92 @@
+{
+  "_note": "ArchGen 设计 token 单一来源（ADR 012 / T05）。UI CSS 变量、架构图 LAYER_THEMES、Mermaid themeVariables、drawio/pptx 形状色全部派生自此。改配色/字体只改这里，UI 与新出的图同时变。",
+  "fonts": {
+    "ui": ["Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "Noto Sans SC", "system-ui", "sans-serif"],
+    "display": ["Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "sans-serif"],
+    "mono": ["SFMono-Regular", "Consolas", "Menlo", "monospace"]
+  },
+  "ui": {
+    "bg": "#eef3fb",
+    "bg-accent-1": "#e3edfb",
+    "bg-accent-2": "#eaf4fb",
+    "panel": "#ffffff",
+    "ink": "#1f2a37",
+    "muted": "#64748b",
+    "line": "#dbe6f3",
+    "accent": "#2563eb",
+    "accent-ink": "#ffffff",
+    "accent-soft": "#e7effe",
+    "warn": "#c2410c",
+    "side-top": "#f5f9fe",
+    "side-bottom": "#eaf2fc",
+    "radius": "10px",
+    "shadow": "0 1px 2px rgba(30,58,95,.05), 0 10px 30px rgba(30,58,95,.06)"
+  },
+  "mermaid": {
+    "theme": "base",
+    "themeVariables": {
+      "primaryColor": "#e7effe",
+      "primaryBorderColor": "#6ea8dc",
+      "primaryTextColor": "#17427e",
+      "lineColor": "#6b8bb0",
+      "secondaryColor": "#eafaf3",
+      "secondaryBorderColor": "#77bd76",
+      "secondaryTextColor": "#22662a",
+      "tertiaryColor": "#f4f8ff",
+      "tertiaryBorderColor": "#6fa8d8",
+      "noteBkgColor": "#fff8ec",
+      "noteBorderColor": "#e0a86a",
+      "fontSize": "15px"
+    },
+    "flowchart": {
+      "padding": 16,
+      "nodeSpacing": 48,
+      "rankSpacing": 56,
+      "diagramPadding": 12
+    },
+    "classDefs": {
+      "start":    {"fill": "#e7effe", "stroke": "#6ea8dc", "color": "#17427e"},
+      "process":  {"fill": "#f2f8ff", "stroke": "#6fa8d8", "color": "#17508c"},
+      "decision": {"fill": "#fff8ec", "stroke": "#e0a86a", "color": "#8a5116"},
+      "store":    {"fill": "#eafaf3", "stroke": "#77bd76", "color": "#22662a"},
+      "ext":      {"fill": "#fafafa", "stroke": "#94a3b8", "color": "#41546b"}
+    },
+    "roles": {
+      "client":   {"fill": "#fff8ec", "stroke": "#e0a86a", "color": "#8a5116"},
+      "orch":     {"fill": "#e7effe", "stroke": "#6ea8dc", "color": "#17427e"},
+      "retrieve": {"fill": "#faf6ff", "stroke": "#a98cd8", "color": "#553a94"},
+      "llm":      {"fill": "#fdf1e2", "stroke": "#e0a86a", "color": "#8a5116"},
+      "store":    {"fill": "#f1fbfc", "stroke": "#6ab5c4", "color": "#125e6b"},
+      "pipe":     {"fill": "#f3fbf3", "stroke": "#77bd76", "color": "#22662a"}
+    }
+  },
+  "shape": {
+    "fill": "#e7effe",
+    "stroke": "#6ea8dc",
+    "text": "#17427e"
+  },
+  "layers": [
+    {"key": "blue",   "border": "#6ea8dc", "body": "#f2f8ff", "title1": "#cfe4fb", "title2": "#e9f3fe", "fg": "#1a4d8f"},
+    {"key": "green",  "border": "#77bd76", "body": "#f3fbf3", "title1": "#d5f0d2", "title2": "#eaf8e8", "fg": "#22662a"},
+    {"key": "blue2",  "border": "#6fa8d8", "body": "#f2f8ff", "title1": "#cbe2f7", "title2": "#e7f2fc", "fg": "#17508c"},
+    {"key": "cyan",   "border": "#6ab5c4", "body": "#f1fbfc", "title1": "#cbeaf0", "title2": "#e7f7fa", "fg": "#125e6b"},
+    {"key": "purple", "border": "#a98cd8", "body": "#faf6ff", "title1": "#e4d9f6", "title2": "#f2ecfb", "fg": "#553a94"},
+    {"key": "orange", "border": "#e0a86a", "body": "#fff8f0", "title1": "#fbe3c8", "title2": "#fdf1e2", "fg": "#8a5116"}
+  ],
+  "external_layer": {"border": "#94a3b8", "body": "#fafafa", "title1": "#e8ecf1", "title2": "#f3f5f8", "fg": "#41546b"},
+  "page": {
+    "width": 1180,
+    "padding": 38,
+    "chip_font_px": 12.5,
+    "chip_pad_px": 18,
+    "layer_border_px": 3,
+    "groups_pad_x": 28,
+    "group_gap": 12,
+    "group_box_inset": 22,
+    "chip_gap": 8,
+    "max_chip_cols": 5,
+    "pptx_width_in": 13.333,
+    "pptx_height_in": 7.5,
+    "pptx_margin_in": 0.4
+  }
+}

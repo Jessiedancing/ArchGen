@@ -1,0 +1,67 @@
+{
+  "note": "OpenAI / 千问 兼容的 function calling 定义。把它注册给 Agent，后端执行 `python3 archgen.py --text ... --style ... --json` 并回传 stdout。",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "archgen_create",
+        "description": "把一段技术文本变成图表。用用户自己的私有模型推理，固定导出 png/html/md/mmd 四种格式，文件名按 名称_日期_V版本 管理，返回各文件路径。需要画架构图、流程图、时序图、数据流图、部署拓扑、状态机、ER 图时调用。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "要画图的原文。信息越具体，图越准确。"
+            },
+            "style": {
+              "type": "string",
+              "enum": [
+                "architecture",
+                "flowchart",
+                "sequence",
+                "dataflow",
+                "deployment",
+                "state",
+                "er"
+              ],
+              "description": "图种：architecture=分层架构，flowchart=流程，sequence=时序，dataflow=数据流，deployment=部署拓扑，state=状态机，er=实体关系"
+            },
+            "name": {
+              "type": "string",
+              "description": "输出文件名前缀，不传则按图标题自动命名"
+            },
+            "out_dir": {
+              "type": "string",
+              "description": "输出目录，默认 diagrams"
+            },
+            "with_drawio": {
+              "type": "boolean",
+              "description": "额外导出可编辑 .drawio"
+            },
+            "with_pptx": {
+              "type": "boolean",
+              "description": "额外导出可编辑 .pptx（需 python-pptx）"
+            }
+          },
+          "required": ["text", "style"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "archgen_list_styles",
+        "description": "列出 ArchGen 支持的图种、固定导出格式与命名规则。不确定该画哪种图时先调用。",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      }
+    }
+  ],
+  "cli_mapping": {
+    "archgen_create": "python3 archgen.py --text {text} --style {style} [--name {name}] [--out-dir {out_dir}] [--with-drawio] [--with-pptx] --json",
+    "archgen_list_styles": "python3 archgen.py --list-styles --json"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "default": "architecture",
+  "standard_outputs": ["png", "html", "md", "mmd"],
+  "naming": "{名称}_{YYYYMMDD}_V{n}",
+  "styles": {
+    "architecture": {
+      "name": "分层色块架构图",
+      "name_hint": "分层色块架构图",
+      "description": "横向分层色块 + 层内能力分组 + 底部外部对接",
+      "use_when": "系统分层、模块边界、外部依赖总览",
+      "system_prompt": "diagram_styles/architecture_system.txt",
+      "renderer": "layered_html"
+    },
+    "flowchart": {
+      "name": "流程图",
+      "name_hint": "流程图",
+      "description": "步骤、分支、审批、状态流转",
+      "use_when": "业务流程、处理链路、判断分支",
+      "system_prompt": "diagram_styles/flowchart_system.txt",
+      "renderer": "mermaid"
+    },
+    "sequence": {
+      "name": "时序图",
+      "name_hint": "时序图",
+      "description": "服务/模块间调用先后与交互",
+      "use_when": "接口调用顺序、上下游交互、异步回调",
+      "system_prompt": "diagram_styles/sequence_system.txt",
+      "renderer": "mermaid"
+    },
+    "dataflow": {
+      "name": "数据流图",
+      "name_hint": "数据流图",
+      "description": "数据源 → 处理 → 存储的流动路径",
+      "use_when": "采集、清洗、同步、ETL、数仓分层",
+      "system_prompt": "diagram_styles/dataflow_system.txt",
+      "renderer": "mermaid"
+    },
+    "deployment": {
+      "name": "部署拓扑图",
+      "name_hint": "部署拓扑图",
+      "description": "区域/集群/节点边界与网络调用",
+      "use_when": "机房、可用区、集群部署、灾备多活",
+      "system_prompt": "diagram_styles/deployment_system.txt",
+      "renderer": "mermaid"
+    },
+    "state": {
+      "name": "状态机图",
+      "name_hint": "状态机图",
+      "description": "状态与流转条件",
+      "use_when": "订单/审核/任务生命周期",
+      "system_prompt": "diagram_styles/state_system.txt",
+      "renderer": "mermaid"
+    },
+    "er": {
+      "name": "实体关系图",
+      "name_hint": "实体关系图",
+      "description": "数据实体、字段与关系基数",
+      "use_when": "数据模型、表结构、领域实体",
+      "system_prompt": "diagram_styles/er_system.txt",
+      "renderer": "mermaid"
+    },
+    "techflow": {
+      "name": "技术解析图",
+      "name_hint": "技术解析图",
+      "description": "编号请求流 + 角色配色 + 在线/离线双轨",
+      "use_when": "RAG/Agent/链路讲解、技术文章插图、请求逐步怎么走",
+      "system_prompt": "diagram_styles/techflow_system.txt",
+      "renderer": "mermaid"
+    }
+  }
+}

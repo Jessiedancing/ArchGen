@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ArchGen</title>
+  <link rel="stylesheet" href="/app.css" />
+  <!-- 由 design_tokens.json 动态派生的配色/字体变量，覆盖 app.css 兜底值（ADR 012 / T05） -->
+  <link rel="stylesheet" href="/tokens.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="logo">ArchGen</span>
+        <span class="tag" id="versionTag">本地绿色版</span>
+      </div>
+      <div class="top-actions">
+        <label class="profile-switch">当前环境
+          <select id="profileSelect" title="切换后立即生效，不静默回退"></select>
+        </label>
+        <button type="button" class="btn ghost" id="btnOpenFolder" title="打开产出文件夹">打开文件夹</button>
+        <button type="button" class="btn ghost" id="btnSettings" title="网关设置">设置</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="side">
+        <h2>图种</h2>
+        <div class="styles" id="styleList"></div>
+        <h2 class="mt">最近</h2>
+        <div class="history" id="historyList">
+          <p class="muted">还没有图</p>
+        </div>
+      </aside>
+
+      <section class="center">
+        <label class="field-label" for="inputText">要画的内容</label>
+        <textarea id="inputText" placeholder="把系统分层、模块、依赖、步骤写清楚。模型只依据你写的内容画，不会替你编。&#10;&#10;也可在末尾加要求，例如：按四层画；每层最多三个分组；模块名不超过六个字。"></textarea>
+        <div class="row">
+          <label class="inline">
+            文件名
+            <input id="inputName" type="text" placeholder="可选，默认用图标题" />
+          </label>
+          <label class="inline">
+            模型
+            <input id="inputModel" list="modelList" type="text" placeholder="可选，覆盖默认模型" />
+            <datalist id="modelList"></datalist>
+          </label>
+          <button type="button" class="btn primary" id="btnGenerate">生成图表</button>
+        </div>
+        <p class="status" id="statusLine"></p>
+      </section>
+
+      <section class="preview">
+        <div class="preview-head">
+          <h2>预览</h2>
+          <div class="zoom-bar" id="zoomBar">
+            <button type="button" class="btn ghost zoom-btn" id="btnZoomOut" title="缩小">缩小</button>
+            <span class="zoom-label" id="zoomLabel">—</span>
+            <button type="button" class="btn ghost zoom-btn" id="btnZoomIn" title="放大">放大</button>
+            <button type="button" class="btn ghost zoom-btn" id="btnZoomReset" title="设计稿原始大小（逻辑 1:1，不是 PNG 像素）">1:1</button>
+            <button type="button" class="btn ghost zoom-btn" id="btnZoomFit" title="适应窗口">适应窗口</button>
+          </div>
+          <span class="muted" id="previewStem"></span>
+        </div>
+        <div class="preview-frame" id="previewFrame">
+          <p class="muted placeholder">生成后这里显示 PNG</p>
+        </div>
+        <div class="export-bar" id="exportBar" hidden>
+          <button type="button" class="btn ghost" id="btnExportDrawio">导出 draw.io</button>
+          <button type="button" class="btn ghost" id="btnExportPptx">导出 PPTX</button>
+          <button type="button" class="btn ghost" id="btnCopyPng">复制图片</button>
+          <span class="muted">复制过去是图片；要改文字/颜色请导出 PPTX</span>
+        </div>
+        <div class="file-links" id="fileLinks"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="settings-form" id="settingsForm">
+      <h2>私有模型网关</h2>
+      <p class="muted">只请求当前档位填写的地址，不走公有云默认模型。切换环境不会静默回退。</p>
+      <div class="profile-toolbar">
+        <label>档位显示名
+          <input name="label" placeholder="例如：家里本地 / 公司网关" />
+        </label>
+        <div class="dialog-actions">
+          <button type="button" class="btn ghost" id="btnProfileNew">新增</button>
+          <button type="button" class="btn ghost" id="btnProfileCopy">复制</button>
+          <button type="button" class="btn ghost" id="btnProfileRename">改名</button>
+          <button type="button" class="btn ghost" id="btnProfileDelete">删除</button>
+        </div>
+      </div>
+      <label>BASE_URL
+        <input name="BASE_URL" required placeholder="https://your-gateway/v1 或 http://localhost:11434/v1" />
+      </label>
+      <label>OPENAI_API_KEY
+        <input name="OPENAI_API_KEY" required placeholder="你的密钥（本机 Ollama 可填 ollama）" />
+      </label>
+      <label>MODEL（默认模型）
+        <input name="MODEL" list="modelList" required placeholder="Qwen3.5-27B 或 openai/gpt-oss-20b" />
+      </label>
+      <label>MODELS（可选别名）
+        <input name="MODELS" placeholder="fast=qwen2.5:7b,pro=qwen2.5:32b" />
+      </label>
+      <label>SSL_VERIFY
+        <select name="SSL_VERIFY">
+          <option value="false">false（默认，自签证书网关）</option>
+          <option value="true">true</option>
+        </select>
+      </label>
+      <label>REQUEST_TIMEOUT（秒，随档位；云端建议 120，本地 600）
+        <input name="REQUEST_TIMEOUT" placeholder="120" />
+      </label>
+      <label>TRUST_ENV（是否使用系统代理，默认 false）
+        <select name="TRUST_ENV">
+          <option value="false">false（忽略系统代理）</option>
+          <option value="true">true（使用 HTTP_PROXY 等）</option>
+        </select>
+      </label>
+      <label>PROXY（可选，显式代理）
+        <input name="PROXY" placeholder="http://127.0.0.1:7890" />
+      </label>
+      <div class="dialog-actions">
+        <button type="button" class="btn ghost" id="btnProbe">测试当前档</button>
+        <button type="button" class="btn ghost" id="btnProbeAll">探测全部档位</button>
+        <button type="submit" class="btn primary" value="save">保存</button>
+        <button type="button" class="btn ghost" id="btnCloseSettings">关闭</button>
+      </div>
+      <pre class="probe-out" id="probeOut"></pre>
+    </form>
+  </dialog>
+
+  <script src="/app.js"></script>
+</body>
+</html>
