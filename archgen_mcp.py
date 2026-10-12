@@ -39,7 +39,7 @@ DEFAULT_LOG = "logs/archgen_output.txt"
 TOOLS = [
     {
         "name": "archgen_list_styles",
-        "description": "列出 ArchGen 支持的图表类型（架构图/流程图/时序图/数据流图/部署拓扑/状态机/ER），以及固定导出的文件格式与命名规则。画图前先调用它选型。",
+        "description": "列出 ArchGen 支持的图表类型（架构图/流程图/时序图/数据流图/部署拓扑/状态机/ER/技术解析图），以及固定导出的文件格式与命名规则。画图前先调用它选型。",
         "inputSchema": {"type": "object", "properties": {}, "required": []},
     },
     {
@@ -51,7 +51,7 @@ TOOLS = [
                 "text": {"type": "string", "description": "要画图的原文，越具体越准确"},
                 "style": {
                     "type": "string",
-                    "description": "图表类型 key，如 architecture / flowchart / sequence / dataflow / deployment / state / er；不传用默认",
+                    "description": "图表类型 key，如 architecture / flowchart / sequence / dataflow / deployment / state / er / techflow；不传用默认",
                 },
                 "name": {"type": "string", "description": "文件名前缀，不传则按图标题自动命名"},
                 "model": {"type": "string", "description": "覆盖默认模型，可用 .env 中 MODELS 的别名"},
@@ -94,7 +94,7 @@ def _format_paths(paths: dict, style_key: str) -> dict:
         "style": style_key,
         "stem": str(paths.get("stem", "")),
         "files": files,
-        "note": "png/html/md/mmd 为固定四件套；drawio/pptx 仅在请求 with_drawio / with_pptx 时生成",
+        "note": "png/html/md/mmd 为固定四件套（Mermaid html 约 3.2MB 有意为之）；drawio/pptx 仅在请求 with_drawio / with_pptx 时生成",
     }
 
 

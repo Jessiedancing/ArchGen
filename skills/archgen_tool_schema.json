@@ -22,9 +22,10 @@
                 "dataflow",
                 "deployment",
                 "state",
-                "er"
+                "er",
+                "techflow"
               ],
-              "description": "图种：architecture=分层架构，flowchart=流程，sequence=时序，dataflow=数据流，deployment=部署拓扑，state=状态机，er=实体关系"
+              "description": "图种：architecture=分层架构，flowchart=流程，sequence=时序，dataflow=数据流，deployment=部署拓扑，state=状态机，er=实体关系，techflow=技术解析图"
             },
             "name": {
               "type": "string",

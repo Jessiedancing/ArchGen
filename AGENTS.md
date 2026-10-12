@@ -48,7 +48,7 @@ python3 archgen.py --text "<用户原文>" --style <图种> --json
 | 格式 | 用途 |
 |------|------|
 | `.png` | 贴 PPT / 评审材料 |
-| `.html` | 浏览器预览 |
+| `.html` | 浏览器预览（Mermaid 图约 3.2MB，运行时内联，有意为之） |
 | `.md` | 粘进文档（内含 Mermaid） |
 | `.mmd` | 二次编辑 |
 
